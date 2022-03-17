@@ -1,4 +1,3 @@
-
 <?php
 include 'functions.php';
 session_start();
@@ -49,3 +48,4 @@ if (isset($_GET['id'])) {
         </div>
 
     <?php include 'footer.php'; ?>
+
