@@ -44,7 +44,7 @@ $total_products = $pdo->query('SELECT * FROM events')->rowCount();
           <h5>
           <?= $event['event_date']?>
         </h5>
-          <a href="viewevent.php?id=<?=$event['event_id']?>" class="btn">View Event Information</a>
+          <a href="viewevent.php?id=<?=$event['id']?>" class="btn">View Event Information</a>
         </div>
       </div>
       <?php endforeach; ?>
