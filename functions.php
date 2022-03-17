@@ -23,10 +23,10 @@ function get_image_url($event){
     $result = $stmt->fetch();
     $wix_image_ref = $result['image'];
     $image_array = explode('/', $wix_image_ref);
-    //print_r($image_array);
     
     $image_url = $wix_end_point . $image_array[3];
-    echo $image_url;
+    return $image_url;
+    
     
 
 }
