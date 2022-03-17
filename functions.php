@@ -13,6 +13,23 @@ function pdo_connect_mysql() {
     }
 }
 
+function get_image_url($event){
+    
+    $wix_end_point = "https://static.wixstatic.com/media/";
+    
+    $db = pdo_connect_mysql();
+    $stmt = $db->prepare("SELECT * FROM events where id like " . $event);
+    $stmt->execute();
+    $result = $stmt->fetch();
+    $wix_image_ref = $result['image'];
+    $image_array = explode('/', $wix_image_ref);
+    //print_r($image_array);
+    
+    $image_url = $wix_end_point . $image_array[3];
+    echo $image_url;
+    
+
+}
 
 function curl_ping($function, $productId, $name, $max_attendee, $description, $price, $image_url){
     if ($image_url == ""){
