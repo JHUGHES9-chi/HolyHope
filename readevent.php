@@ -77,3 +77,4 @@ $total_products = $pdo->query('SELECT * FROM events')->rowCount();
   </div>
 
   <?php include 'footer.php'; ?>
+
