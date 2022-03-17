@@ -10,10 +10,10 @@ if(!isset($_SESSION['username']))
 $pdo = pdo_connect_mysql();
 $msg = '';
 // Check that the product ID exists
-if (isset($_GET['event_id'])) {
+if (isset($_GET['id'])) {
     // Select the record that is going to be deleted
-    $stmt = $pdo->prepare('SELECT * FROM events WHERE event_id = ?');
-    $stmt->execute([$_GET['event_id']]);
+    $stmt = $pdo->prepare('SELECT * FROM events WHERE id = ?');
+    $stmt->execute([$_GET['id']]);
     $event = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$event) {
         exit('Product doesn\'t exist with that ID!');
@@ -25,12 +25,12 @@ if (isset($_GET['event_id'])) {
 ?>
 <?php include 'header.php'; ?>
         <div class="contact-section">
-            <h2>View Event #<?=$event['event_id']?></h2> 
-            <button type="button" class="btn btn-primary fa fa-edit" onclick="document.location='editevent.php?id=<?=$event['event_id']?>'">Update</button>
-            <button type="button" class="btn btn-danger fa fa-remove" onclick="document.location='deleteevent.php?id=<?=$event['event_id']?>'">Delete</button>
-            <form action="editevent.php?id=<?=$event['event_id']?>" method="post">
+            <h2>View Event #<?=$event['id']?></h2> 
+            <button type="button" class="btn btn-primary fa fa-edit" onclick="document.location='editevent.php?id=<?=$event['id']?>'">Update</button>
+            <button type="button" class="btn btn-danger fa fa-remove" onclick="document.location='deleteevent.php?id=<?=$event['id']?>'">Delete</button>
+            <form action="editevent.php?id=<?=$event['id']?>" method="post">
                     <label for="Eventid">Event id</label>
-                    <input type="number" name="id" id="id"class="contact-form-text" placeholder="Event id" value="<?=$event['event_id']?>" required>
+                    <input type="number" name="id" id="id"class="contact-form-text" placeholder="Event id" value="<?=$event['id']?>" required>
                     <label for="name">Event Name</label>
                     <input type="text" name="name" id="name" class="contact-form-text" placeholder="Event Name" value="<?=$event['name']?>" required>
                     <label for="name">Event price</label>
