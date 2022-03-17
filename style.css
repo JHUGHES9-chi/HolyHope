@@ -482,6 +482,35 @@ footer {
 .fa:hover{
   cursor: pointer;
 }
+/*products page*/
+table{
+  border-collapse: collapse;
+  color: #f4511e;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  width: 95%;
+  margin-left: 2.5%;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+th {
+  background-color: #f4511e;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  margin: 1px; 
+  padding: 1px;
+  font-size: 18px; 
+}
+
+td {
+  color: Black;
+  font-size: 18px;
+  padding: 6px;
+  border: 1px solid;
+} 
+
 
 
 
