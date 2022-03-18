@@ -15,7 +15,7 @@
 
 <nav class="navtop">
       <div>
-        <h1>HolyHope </h1>
+        <h1><a href='home.php'> HolyHope </a> </h1>
         <a href="readevent.php"><i class="fa fa-paint-brush"></i>Events</a>
         <a href="readproducts.php"><i class="fa fa-product-hunt"></i>Products</a>
         <a href="kpiPage.php"><i class="far fa-lightbulb"></i>KPI</a>
