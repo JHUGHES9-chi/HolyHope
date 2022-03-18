@@ -16,12 +16,12 @@ if (isset($_GET['id'])) {
         // This part is similar to the create.php, but instead updates a record and not insert
         $name = isset($_POST['name']) ? $_POST['name'] : '';
         $price = isset($_POST['price']) ? $_POST['price'] : '';
-        $event_date = isset($_POST['event_date']) ? $_POST['event_date'] : '';
-        $location = isset($_POST['location']) ? $_POST['location'] : '';
+        $image = isset($_POST['image']) ? $_POST['image'] : '';
+        $stock = isset($_POST['stock']) ? $_POST['stock'] : '';
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         // Update the record
-        $stmt = $pdo->prepare('UPDATE events SET name = ?, price = ?, event_date = ?, location = ?, description = ? WHERE id = ?');
-        $stmt->execute([$id, $name, $price, $event_date, $location ,$description, $_GET['id']]);
+        $stmt = $pdo->prepare('UPDATE events SET name = ?, name = ?, price = ?, image = ?, stock = ?, description = ? WHERE id = ?');
+        $stmt->execute([$id, $name, $price, $image, $stock ,$description, $_GET['id']]);
         $msg = 'Updated Successfully!';
         header('Location: readevent.php');
     }
@@ -46,12 +46,12 @@ if (isset($_GET['id'])) {
                     <input type="text" name="name" id="name" class="contact-form-text" placeholder="Event Name" value="<?=$event['name']?>" required>
                     <label for="name">Event price</label>
                     <input type="decimals" name="price" id="price" class="contact-form-text" placeholder="Event price" value="&pound; <?=$event['price']?>" required>
-                    <label for="name">Event Date</label>
-                    <input type="date" name="event_date" id="event_date" class="contact-form-text" value="<?=$event['event_date']?>" required>
-                    <label for="name">Event Location</label>
-                    <input type="text" name="location" id="location" class="contact-form-text" placeholder="Event price" value="<?=$event['location']?>" required>
-                    <label for="description">Description</label>
-                    <input type="text" name="description" placeholder="enter some description" value="<?=$event['description']?>" id="description">
+                    <label for="image">Event Image</label>
+                    <input type="image" name="image" id="image" class="contact-form-text" placeholder="Event image" value="&pound; <?=$event['image']?>" required>
+                    <label for="image">Stock</label>
+                    <input type="number" name="stock" id="stock" class="contact-form-text" placeholder="Stock" value="&pound; <?=$event['stock']?>" required>
+                    <label for="description">Description : </label>
+                    <textarea name="description" id="description" rows="5" cols="100"><?=$event['description']?></textarea>
 
                     <input type="submit" name="submit" class="contact-button" value="update">
                     <input type="button" class="contact-button" value="Go back!" onclick="history.go(-1)">
@@ -61,3 +61,4 @@ if (isset($_GET['id'])) {
         </div>
 
 <?php include 'footer.php'; ?>
+
