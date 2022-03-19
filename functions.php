@@ -13,6 +13,14 @@ function pdo_connect_mysql() {
     }
 }
 
+
+function delete_product($productId){
+        $function = "deleteProduct";
+        
+        curl_ping($function, $productId);
+}
+
+
 function get_image_url($event){
     
     $wix_end_point = "https://static.wixstatic.com/media/";
@@ -31,7 +39,14 @@ function get_image_url($event){
 
 }
 
-function curl_ping($function, $productId, $name, $max_attendee, $description, $price, $image_url){
+function curl_ping($function, $arg1){
+    $url_base = "https://holyhope.co.uk/_functions-dev/";
+    
+    $url = $url_base . $function . "/secretphrase/" . $arg1;
+    echo $url;
+}
+
+function curl_event_ping($function, $productId, $name, $max_attendee, $description, $price, $image_url){
     if ($image_url == ""){
         $ending = $productId . "/" . $name . "/" . $max_attendee . "/" . $description . "/" . $price;
     } else{
@@ -45,7 +60,7 @@ function curl_ping($function, $productId, $name, $max_attendee, $description, $p
 function add_event($productId, $name, $description, $max_attendee, $price, $image_url = ""){
     $function = "add_event";
 
-    curl_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
+    curl_event_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
 
 
 }
@@ -53,7 +68,7 @@ function add_event($productId, $name, $description, $max_attendee, $price, $imag
 function updateEvent($productId, $name, $description, $max_attendee, $price, $image_url = ""){
     $function = "updateEvent";
 
-    curl_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
+    curl_event_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
 }
 
 function updateProduct($productId, $name, $description, $max_attendee, $price, $image_url = ""){
