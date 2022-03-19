@@ -56,6 +56,12 @@ function updateEvent($productId, $name, $description, $max_attendee, $price, $im
     curl_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
 }
 
+function updateProduct($productId, $name, $description, $max_attendee, $price, $image_url = ""){
+    $function = "updateEvent";
+
+    curl_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
+}
+
 
 
 
