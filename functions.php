@@ -42,11 +42,45 @@ function get_image_url($event){
     
     $image_url = $wix_end_point . $image_array[3];
     return $image_url;
-    
-    
+       
 
 }
 
+function calculate_month_event_sales(){
+    $total = 0;
+    $qry_get_month = "SELECT * FROM event_orders WHERE YEAR(event_orders.event_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(event_orders.event_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
+    $db = pdo_connect_mysql();
+    $stmt = $db->query($qry_get_month);
+    
+
+    while ($row = $stmt->fetch()) {
+        $total += (float)$row['order_total'];
+    }
+    
+    return $total;
+    
+}
+
+function calculate_month_product_sales(){
+    $total = 0;
+    $qry_get_month = "SELECT * FROM product_orders WHERE YEAR(product_orders.date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(product_orders.date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
+    $db = pdo_connect_mysql();
+    $stmt = $db->query($qry_get_month);
+    
+
+    while ($row = $stmt->fetch()) {
+        $total += (float)$row['total_spent'];
+    }
+    
+    return $total;
+    
+}
+
+    
+    
+    
+
+//Function to ping http api on wix. This function handles functions that require 1 argument. Authentication included.
 function curl_ping($function, $arg1){
     $url_base = "https://holyhope.co.uk/_functions-dev/";
     
@@ -57,6 +91,7 @@ function parse_string($string){
     return str_replace(" ", "_", $string);
 }
 
+//Function to ping http API on wix. This function handles updateevent & addevent. Authentication included.
 function curl_event_ping($function, $productId, $name, $max_attendee, $description, $price, $image_url){
     $name = parse_string($name);
     $description = parse_string($description);

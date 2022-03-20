@@ -9,8 +9,8 @@ if(!isset($_SESSION['username']))
 <?php include 'header.php';?>
 <h1>Sales breakdown report</h1>
 <?php
-$events = getRowAmount("events");
-$products = getRowAmount("products");
+$events = calculate_month_event_sales();
+$products = calculate_month_product_sales();
 // pichart.php displays a pichart on the page 
 include "piechart.php";
 echo "<div>
