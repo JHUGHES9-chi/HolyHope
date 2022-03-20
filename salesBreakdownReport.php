@@ -14,8 +14,8 @@ $products = calculate_month_product_sales();
 // pichart.php displays a pichart on the page 
 include "piechart.php";
 echo "<div>
-<p>Total events sold: ". $events. "</p>
-<p>Total products sold: " .$products."</p>
+<p>Total revenue from events sold: £". $events. "</p>
+<p>Total revenue from products sold: £" .$products."</p>
 </div>";
 ?>
 
