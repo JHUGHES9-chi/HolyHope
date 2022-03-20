@@ -8,10 +8,10 @@ if(!isset($_SESSION['username']))
 <?php include 'header.php';?>
 <div id="home-container">
   <div class="top left">
-  <button class="home-button button3" onclick="document.location='#'">Monthly sales report</button>
+  <button class="home-button button3" onclick="document.location='viewSales.php'">Monthly sales report</button>
   </div>
   <div class="top right">
-  <button class="home-button button3" onclick="document.location='#'">Current months events report</button>
+  <button class="home-button button3" onclick="document.location='websiteTraffic.php'">Holyhope.co.uk website Traffic</button>
   </div>
   <div class="bottom left">
   <button class="home-button button3" onclick="document.location='salesBreakdownReport.php'">Sales breakdown report</button>
