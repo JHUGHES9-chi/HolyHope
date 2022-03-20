@@ -53,8 +53,14 @@ function curl_ping($function, $arg1){
     $url = $url_base . $function . "/secretphrase/" . $arg1;
     echo $url;
 }
+function parse_string($string){
+    return str_replace(" ", "_", $string);
+}
 
 function curl_event_ping($function, $productId, $name, $max_attendee, $description, $price, $image_url){
+    $name = parse_string($name);
+    $description = parse_string($description);
+    
     if ($image_url == ""){
         $ending = $productId . "/" . $name . "/" . $max_attendee . "/" . $description . "/" . $price;
     } else{
