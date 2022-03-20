@@ -15,10 +15,10 @@
 <nav class="navtop">
       <div>
         <h1><a href="home.php">HolyHope</a> </h1>
-            <a href="emailing.php">Emailing</a>
-            <a href="kpiPage.php">Kpi's</a>
-            <a href="emailing.php">Email</a>
-            <a href="readevent.php"><i class="fa fa-product-hunt"></i>Events</a>
+        <a href="readevent.php"><i class="fas fa-atom"></i>Events</a>
+        <a href="readproducts.php"><i class="fa fa-product-hunt"></i>Products</a>
+            <a href="emailing.php"><i class="fa fa-envelope"></i>Emailing</a>
+            <a href="kpiPage.php"><i class="fas fa-lightbulb"></i>Kpi's</a>
             <a href="logout.php"><i class="fa fa-sign-out"></i>Log out</a>
       </div>
       </nav>
