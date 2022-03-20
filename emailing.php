@@ -201,6 +201,5 @@ if(isset($_POST['submitEmail'])){
       echo "<p>Message was sent successfully</p>";
     }
 
-}
 ?>
 <?php include 'footer.php';?>
