@@ -32,14 +32,13 @@ function delete_product($productId){
 function get_image_url($event){
     
     $wix_end_point = "https://static.wixstatic.com/media/";
-    
+    $sql = "SELECT * FROM events where id like '" . $event . "'";
     $db = pdo_connect_mysql();
-    $stmt = $db->prepare("SELECT * FROM events where id like " . $event);
+    $stmt = $db->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetch();
     $wix_image_ref = $result['image'];
     $image_array = explode('/', $wix_image_ref);
-    
     $image_url = $wix_end_point . $image_array[3];
     return $image_url;
        
