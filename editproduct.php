@@ -57,7 +57,7 @@ if (isset($_GET['id'])) {
                     <input type="number" name="id" id="id"class="contact-form-text" placeholder="Inventory" value="<?=$product['inventory']?>" required>
                     <label for="description">Description</label>
                     <input type="text" name="description" placeholder="enter some description" value="<?=$product['description']?>" id="description">
-                    <input type="submit" name="submit" class="contact-button" value="update">
+                    <input type="submit" name="submit" class="contact-button update" value="update">
                     <input type="button" class="contact-button" value="Go back!" onclick="history.go(-1)">
             </form>
             <?php if ($msg): ?>
