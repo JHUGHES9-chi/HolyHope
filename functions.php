@@ -13,6 +13,14 @@ function pdo_connect_mysql() {
     }
 }
 
+function get_temp_event_id(){
+    $db = pdo_connect_mysql();
+    $stmt = $db->prepare("SELECT * from events where temp_event = 1");
+    $stmt->execute();
+    $result = $stmt->fetch();
+    return($result['id']);  
+}
+
 
 function delete_product($productId){
         $function = "deleteProduct";
@@ -53,13 +61,16 @@ function curl_event_ping($function, $productId, $name, $max_attendee, $descripti
         $ending = $productId . "/" . $name . "/" . $max_attendee . "/" . $description . "/" . $price . "/" . $image_url;
     }
     $url = "https://holyhope.co.uk/_functions-dev/" . $function . "/secretphrase/" . $ending;
-    echo($url);
     shell_exec("wget " . $url);
 }
 
-function add_event($productId, $name, $description, $max_attendee, $price, $image_url = ""){
+function add_event($name, $description, $max_attendee, $price, $image_url = ""){
     $function = "add_event";
-
+    $db = pdo_connect_mysql();
+    $productId = get_temp_event_id();
+    $qry = 'UPDATE `events` SET `temp_event` = 0 WHERE id = "' . $productId . '";';
+    echo $qry;
+    $db->query($qry);    
     curl_event_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
 
 
