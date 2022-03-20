@@ -15,7 +15,7 @@ if(!isset($_SESSION['username']))
   <button class="home-button button3" onclick="document.location='readproducts.php'">Products page</button>
   </div>
   <div class="bottom left">
-  <button class="home-button button3" onclick="document.location='#'">Emails page</button>
+  <button class="home-button button3" onclick="document.location='emailing.php'">Emails page</button>
   </div>
   <div class="bottom right">
   <button class="home-button button3" onclick="document.location='kpiPage.php'">KPI's page</button>
