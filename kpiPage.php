@@ -17,7 +17,7 @@ if(!isset($_SESSION['username']))
   <button class="home-button button3" onclick="document.location='salesBreakdownReport.php'">Sales breakdown report</button>
   </div>
   <div class="bottom right">
-  <button class="home-button button3" onclick="document.location='#'">monthly sales report vs last years</button>
+  <button class="home-button button3" onclick="document.location='comparemonthly.php'">Compare monthly sales with last year</button>
   </div>
 </div>
 <?php include 'footer.php'; ?>
