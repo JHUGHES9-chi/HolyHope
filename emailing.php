@@ -191,7 +191,7 @@ if(isset($_POST['submitEmail'])){
   //       $mailObj->AddAddress($email);
   //   }
   }
-  $mailObj->AddAddress($email)
+  $mailObj->AddAddress($email);
   $mailObj->Body = $_POST["body"];
   if(!$mailObj->Send()) {
     
