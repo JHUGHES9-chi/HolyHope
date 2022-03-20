@@ -41,19 +41,19 @@ if (isset($_GET['id'])) {
     <?php include 'header.php'; ?>
         <div class="contact-section">
             <h2>Update Event #<?=$event['id']?></h2>
-            <form action="editevent.php?id=<?=$event['id']?>" method="post">
+                      <form action="editevent.php?id=<?=$event['id']?>" method="post">
                     <label for="name">Event Name</label>
                     <input type="text" name="name" id="name" class="contact-form-text" placeholder="Event Name" value="<?=$event['name']?>" required>
                     <label for="name">Event price</label>
                     <input type="decimals" name="price" id="price" class="contact-form-text" placeholder="Event price" value="&pound; <?=$event['price']?>" required>
                     <label for="image">Event Image</label>
-                    <input type="image" name="image" id="image" class="contact-form-text" placeholder="Event image" value="&pound; <?=$event['image']?>" required>
+                    <input type="image" name="image" id="image" class="contact-form-text" placeholder="Event image" value="<?get_image_url($event['image'])?>" required>
                     <label for="image">Stock</label>
                     <input type="number" name="stock" id="stock" class="contact-form-text" placeholder="Stock" value="&pound; <?=$event['stock']?>" required>
                     <label for="description">Description : </label>
                     <textarea name="description" id="description" rows="5" cols="100"><?=$event['description']?></textarea>
 
-                    <input type="submit" name="submit" class="contact-button" value="update">
+                    <input type="submit" name="submit" class="contact-button update" value="update">
                     <input type="button" class="contact-button" value="Go back!" onclick="history.go(-1)">
             </form>
             <?php if ($msg): ?>
