@@ -141,7 +141,7 @@ $db = pdo_connect_mysql()
       <div class="emailList">
       <?php
       if(isset($_POST["eventButton"])){
-        $emails = getEventCustomersEmails(getEventId($_POST["eventButton"], $db), $db);
+        $emails = getEventCustomersEmails($_POST["eventButton"], $db);
         $i = 0;
         foreach ($emails as $email) {
           makeCheckbox($email["email"], $i);
@@ -203,3 +203,4 @@ if(isset($_POST['submitEmail'])){
 
 ?>
 <?php include 'footer.php';?>
+
