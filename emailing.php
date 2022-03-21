@@ -181,7 +181,6 @@ if(isset($_POST['submitEmail'])){
     $i= 0;
     if (!empty($_FILES['myFile']["name"][0])){
         foreach ($_FILES['myFile']["name"] as $value) {
-        echo($i);
         uploadFile($i);
         $mailObj->addAttachment("uploads/".$_FILES['myFile']["name"][$i]);
         $i++;
