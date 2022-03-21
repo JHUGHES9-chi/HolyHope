@@ -8,7 +8,7 @@ if(!isset($_SESSION['username']))
 ?>
 <?php include 'header.php';?>
 <h1>Sales breakdown report</h1>
-<div class="center">
+<div class="sales-center">
 <?php
 $events = calculate_month_event_sales();
 $products = calculate_month_product_sales();
