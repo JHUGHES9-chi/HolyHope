@@ -5,32 +5,37 @@ if(!isset($_SESSION['username']))
 {
   header('location: index.php');
 }
+$wix_end_point = "https://static.wixstatic.com/media/";
 
 $pdo = pdo_connect_mysql();
 $msg = '';
-// Check if the events id exists, for example update.php?id=1 will get the events with the id of 1
-if (isset($_GET['id'])) {
-    if (!empty($_POST)) {
-        // This part is similar to the create.php, but instead updates a record and not insert
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
-        $handleId = isset($_POST['handleid']) ? $_POST['handleid'] : '';
-        $productimageurl = isset($_POST['productimageurl']) ? $_POST['productimageurl'] : '';
-        $collection = isset($_POST['collection']) ? $_POST['collection'] : '';
-        $price = isset($_POST['price']) ? $_POST['price'] : '';
-        $inventory = isset($_POST['inventory']) ? $_POST['inventory'] : '';
-        $description = isset($_POST['description']) ? $_POST['description'] : '';
-        // Update the record
-        $stmt = $pdo->prepare('UPDATE products SET name = ?, name = ?, handleid = ?, productimageurl = ?, collection = ?, price = ?, inventory = ?, description = ? WHERE id = ?');
-        $stmt->execute([$id, $name, $handleId, $productimageurl, $collection , $price, $inventory, $description, $_GET['id']]);
-        $msg = 'Updated Successfully!';
-        header('Location: readproducts.php');
-    }
     // Get the events from the Events table
     $stmt = $pdo->prepare('SELECT * FROM products WHERE id = ?');
     $stmt->execute([$_GET['id']]);
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$product) {
         exit('products doesn\'t exist with that ID!');
+    }
+
+// Check if the events id exists, for example update.php?id=1 will get the events with the id of 1
+if (isset($_GET['id'])) {
+    if (!empty($_POST)) {
+        // This part is similar to the create.php, but instead updates a record and not insert
+        $name = $_POST['name'];
+        $handleId = ltrim($_POST['handleid'], "product_");
+        $productimageurl = $_POST['imageurl'];
+        $collection = $_POST['collection'];
+        $price = ltrim($_POST['price'], '£ ');
+        $inventory = $_POST['inventory'];
+        $description = $_POST['description'];
+        // Update the record
+        $sql = 'UPDATE products SET name = "' . $name . '", handleid = "' . $handleId . '", productimageurl = "' . $productimageurl . '", collection = "' . $collection . '", price = ' . $price . ', inventory = ' . $inventory . ', description = "' . $description . '" WHERE id = ' . $_GET['id'];
+        //echo $sql;
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        updateProduct($handleId, $name, $inventory, $description, $price, $productimageurl);
+        $msg = 'Updated Successfully!';
+        //header('Location: readproducts.php');
     }
 } else {
     exit('No ID specified!');
@@ -46,15 +51,15 @@ if (isset($_GET['id'])) {
                     <label for="name">Product Name</label>
                     <input type="text" name="name" id="name" class="contact-form-text" placeholder="Product Name" value="<?=$product['name']?>" required>
                     <label for="name">Product Handle Id</label>
-                    <input type="text" name="name" id="name" class="contact-form-text" placeholder="Product Handle Id" value="<?=$product['handleid']?>" required>
+                    <input type="text" name="handleid" id="handleid" class="contact-form-text" placeholder="Product Handle Id" value="<?=$product['handleid']?>" required>
                     <label for="name">Image Url</label>
-                    <input type="text" name="name" id="name" class="contact-form-text" placeholder="Image url" value="<?=$product['productimageurl']?>" required>
+                    <input type="text" name="imageurl" id="imageurl" class="contact-form-text" placeholder="Image url" value="<?=$wix_end_point . $product['productimageurl']?>" required>
                     <label for="name">Collection</label>
-                    <input type="text" name="name" id="name" class="contact-form-text" placeholder="Collection" value="<?=$product['collection']?>" required>
+                    <input type="text" name="collection" id="collection" class="contact-form-text" placeholder="Collection" value="<?=$product['collection']?>" required>
                     <label for="name">Product Price</label>
                     <input type="decimals" name="price" id="price" class="contact-form-text" placeholder="Product price" value="&pound; <?=$product['price']?>" required>
                     <label for="productid">Inventory</label>
-                    <input type="number" name="id" id="id"class="contact-form-text" placeholder="Inventory" value="<?=$product['inventory']?>" required>
+                    <input type="number" name="inventory" id="inventory"class="contact-form-text" placeholder="Inventory" value="<?=$product['inventory']?>" required>
                     <label for="description">Description</label>
                     <input type="text" name="description" placeholder="enter some description" value="<?=$product['description']?>" id="description">
                     <input type="submit" name="submit" class="contact-button update" value="update">
