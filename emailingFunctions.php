@@ -62,7 +62,6 @@ function uploadFile($fileNumber){
     
     // Check if file already exists
     if (file_exists($target_file)) {
-      echo "<p>Sorry, file already exists.</p>";
       $uploadOk = 0;
     }
     
@@ -80,14 +79,7 @@ function uploadFile($fileNumber){
     // }
     
     // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-      echo "Sorry, your file was not uploaded.";
-    // if everything is ok, try to upload file
-    } else {
-      if (move_uploaded_file($_FILES["myFile"]["tmp_name"][$fileNumber], $target_file)) {
-        echo "The file ". htmlspecialchars( basename( $_FILES["myFile"]["name"][$fileNumber])). " has been uploaded.";
-      } else {
-        echo "<p>there was an error uploading your file.</p>";
-      }
+    if ($uploadOk == 1) {
+      move_uploaded_file($_FILES["myFile"]["tmp_name"][$fileNumber], $target_file);
     }
 }
