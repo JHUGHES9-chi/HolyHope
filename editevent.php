@@ -26,6 +26,7 @@ if (isset($_GET['id'])) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $msg = 'Updated Successfully!';
+        updateEvent($_GET['id'], $name, $description, $inventory, $price, $productimageurl)
         header('Location: readevent.php');
     }
     // Get the events from the Events table
