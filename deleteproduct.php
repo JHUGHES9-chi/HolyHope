@@ -18,6 +18,9 @@ if (isset($_GET['id'])) {
     if (!$product) {
         exit('Product doesn\'t exist with that ID!');
     }
+    else{
+        $event_id = $product['handleid'];
+}
     // Make sure the user confirms before deletion
     if (isset($_GET['confirm'])) {
         if ($_GET['confirm'] == 'yes') {
@@ -25,6 +28,7 @@ if (isset($_GET['id'])) {
             $stmt = $pdo->prepare('DELETE FROM products WHERE id = ?');
             $stmt->execute([$_GET['id']]);
             $msg = 'You have deleted the event!';
+            delete_product($event_id);
             header('Location: readproducts.php');
         } else {
             // User clicked the "No" button, redirect them back to the read page

@@ -84,6 +84,8 @@ function curl_ping($function, $arg1){
     $url_base = "https://holyhope.co.uk/_functions-dev/";
     
     $url = $url_base . $function . "/secretphrase/" . $arg1;
+    shell_exec("wget " . $url);
+
     echo $url;
 }
 function parse_string($string){
@@ -101,6 +103,7 @@ function curl_event_ping($function, $productId, $name, $max_attendee, $descripti
         $ending = $productId . "/" . $name . "/" . $max_attendee . "/" . $description . "/" . $price . "/" . $image_url;
     }
     $url = "https://holyhope.co.uk/_functions-dev/" . $function . "/secretphrase/" . $ending;
+    echo $url;
     shell_exec("wget " . $url);
 }
 
@@ -122,10 +125,10 @@ function updateEvent($productId, $name, $description, $max_attendee, $price, $im
     curl_event_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
 }
 
-function updateProduct($productId, $name, $description, $max_attendee, $price, $image_url = ""){
+function updateProduct($productId, $name, $description, $stock, $price, $image_url = ""){
     $function = "updateEvent";
 
-    curl_ping($function, $productId, $name, $description, $max_attendee, $price, $image_url);
+    curl_event_ping($function, $productId, $name, $description, $stock, $price, $image_url);
 }
 
 
