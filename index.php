@@ -10,7 +10,8 @@
   header('location:home.php');
   }
   else{
-    echo"<h3>Login Failed Please enter the correct login detail</h3>";
+    
+    echo"<h3>Login Failed Please enter the correct login detail <br> Hint - " . get_password_hint($username) . "</h3>";
   }
   }
 ?>

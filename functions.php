@@ -13,6 +13,15 @@ function pdo_connect_mysql() {
     }
 }
 
+function get_password_hint($username){
+    $db = pdo_connect_mysql();
+    $qry = "SELECT * from authenticated_users where username = '" . $username . "'";
+    $stmt = $db->prepare($qry);
+    $stmt->execute();
+    $result = $stmt->fetch();
+    return ($result['password_hint']);
+}
+
 function get_temp_event_id(){
     $db = pdo_connect_mysql();
     $stmt = $db->prepare("SELECT * from events where temp_event = 1");
