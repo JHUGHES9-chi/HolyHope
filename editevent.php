@@ -14,14 +14,17 @@ $msg = '';
 if (isset($_GET['id'])) {
     if (!empty($_POST)) {
         // This part is similar to the create.php, but instead updates a record and not insert
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
-        $price = isset($_POST['price']) ? $_POST['price'] : '';
-        $image = isset($_POST['image']) ? $_POST['image'] : '';
-        $stock = isset($_POST['stock']) ? $_POST['stock'] : '';
-        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $name = $_POST['name'];
+        $productimageurl = $_POST['imageurl'];
+        $price = ltrim($_POST['price'], '£ ');
+        $inventory = $_POST['stock'];
+        $description = $_POST['description'];
+
         // Update the record
-        $stmt = $pdo->prepare('UPDATE events SET name = ?, name = ?, price = ?, image = ?, stock = ?, description = ? WHERE id = ?');
-        $stmt->execute([$id, $name, $price, $image, $stock ,$description, $_GET['id']]);
+        $sql = 'UPDATE events SET name = "' . $name . '", image = "' . $productimageurl . '", price = ' . $price . ', stock = ' . $inventory . ', description = "' . $description . '" WHERE events.id = "' . $_GET['id'] . '"';
+        //echo $sql;
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
         $msg = 'Updated Successfully!';
         header('Location: readevent.php');
     }
