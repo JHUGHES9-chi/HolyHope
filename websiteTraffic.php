@@ -14,7 +14,7 @@ if(!isset($_SESSION['username']))
       <option value="14day">Last 2 weeks</option>
       <option value="monthly">Last month</option>
       <option value="yearly">Last 365 days</option>
-	  <option value="YTD">Year to date</option>
+      <option value="YTD">Year to date</option>
     </select>
     <input type="submit" value="View web traffic"/>
   </form>

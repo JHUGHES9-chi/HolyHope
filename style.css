@@ -130,6 +130,13 @@ h3{
   width: 10%;
   padding: 10px;
 }
+
+.center_text {
+  margin: auto;
+  width:20%;
+  padding: 10px;
+}
+  
 .sales-center {
   margin: auto;
   width: 50%;
