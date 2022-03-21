@@ -190,7 +190,7 @@ if(isset($_POST['submitEmail'])){
   //   if (is_int($var)){
   //       $mailObj->AddAddress($email);
   //   }
-  }
+  // }
   $mailObj->AddAddress($email);
   $mailObj->Body = $_POST["body"];
   if(!$mailObj->Send()) {
@@ -200,7 +200,7 @@ if(isset($_POST['submitEmail'])){
     else{
       echo "<p>Message was sent successfully</p>";
     }
-
+}
 ?>
 <?php include 'footer.php';?>
 
