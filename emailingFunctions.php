@@ -31,12 +31,13 @@ function getEvents($db){
     return $events;
 }
 
-function getEventCustomersEmails($eventID, $db){
+function getEventCustomersEmails($eventName, $db){
     $query = "select customers.email as email
     from event_orders 
     inner join customers 
-    on event_orders.customer_id = customers.customer_id
-    where event_orders.id = ".$eventID;
+    on event_orders.customer_email = customers.email
+    where event_orders.event_id = '".$eventName."'";
+    // echo("--------------".$query."------------");
     $stmt = $db->query($query);
     $emails = $stmt->fetchall(PDO::FETCH_ASSOC);
     return $emails;
@@ -46,13 +47,13 @@ function makeEventButton($email, $identifier){
     echo '<button class="eventButton" id='.$identifier.' type="submit" name="eventButton" value="'.$email.'">'.$email.'</button>';
 }
 //TODO UPDATE QUERY HERE To
-function getEventId($eventName, $db){
-    $query="select id from events where name = '".$eventName."'";
-    // echo $query;
-    $stmt = $db->query($query);
-    $id = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $id["id"];
-}
+// function getEventId($eventName, $db){
+//     $query="select id from events where name = '".$eventName."'";
+//     // echo $query;
+//     $stmt = $db->query($query);
+//     $id = $stmt->fetch(PDO::FETCH_ASSOC);
+//     return $id["id"];
+// }
 function uploadFile($fileNumber){
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["myFile"]["name"][$fileNumber]);
