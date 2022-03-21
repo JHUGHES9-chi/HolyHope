@@ -31,6 +31,7 @@ if (isset($_GET['id'])) {
     $stmt = $pdo->prepare('SELECT * FROM events WHERE id = ?');
     $stmt->execute([$_GET['id']]);
     $event = $stmt->fetch(PDO::FETCH_ASSOC);
+    $wix_image = $event['image'];
     if (!$event) {
         exit('events doesn\'t exist with that ID!');
     }
@@ -49,9 +50,11 @@ if (isset($_GET['id'])) {
                     <label for="name">Event price</label>
                     <input type="decimals" name="price" id="price" class="contact-form-text" placeholder="Event price" value="&pound; <?=$event['price']?>" required>
                     <label for="image">Event Image</label>
-                    <input type="image" name="image" id="image" class="contact-form-text" placeholder="Event image" value="<?get_image_url($event['image'])?>" required>
+                    <img src="<?php get_image_url($wix_image)?>">
+                    
+                    <input type="image" name="image" id="image" class="contact-form-text" placeholder="Event image" value="<?php $event['image']?>" required>
                     <label for="image">Stock</label>
-                    <input type="number" name="stock" id="stock" class="contact-form-text" placeholder="Stock" value="&pound; <?=$event['stock']?>" required>
+                    <input type="number" name="stock" id="stock" class="contact-form-text" placeholder="Stock" value="pound; <?php=$event['stock']?>" required>
                     <label for="description">Description : </label>
                     <textarea name="description" id="description" rows="5" cols="100"><?=$event['description']?></textarea>
 

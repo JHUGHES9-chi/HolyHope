@@ -22,6 +22,33 @@ function get_password_hint($username){
     return ($result['password_hint']);
 }
 
+
+function file_uploader($fileNumber){
+    $target_dir = "images/";
+    $target_file = $target_dir . basename($_FILES["myFile"]["name"][$fileNumber]);
+    
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    
+    // Check if file already exists
+    if (file_exists($target_file)) {
+      echo "<p>Sorry, file already exists.</p>";
+      $uploadOk = 0;
+    }
+    
+    if ($uploadOk == 0) {
+      echo "Sorry, your file was not uploaded.";
+    // if everything is ok, try to upload file
+    } else {
+      if (move_uploaded_file($_FILES["myFile"]["tmp_name"][$fileNumber], $target_file)) {
+        echo "The file ". htmlspecialchars( basename( $_FILES["myFile"]["name"][$fileNumber])). " has been uploaded.";
+      } else {
+           echo "Not uploaded because of error #".$_FILES["datei"]["error"];
+      }
+    }
+}
+
+
 function get_temp_event_id(){
     $db = pdo_connect_mysql();
     $stmt = $db->prepare("SELECT * from events where temp_event = 1");
@@ -49,6 +76,7 @@ function get_image_url($event){
     $wix_image_ref = $result['image'];
     $image_array = explode('/', $wix_image_ref);
     $image_url = $wix_end_point . $image_array[3];
+    echo $image_url;
     return $image_url;
        
 
