@@ -10,7 +10,7 @@ if(!isset($_SESSION['username']))
   <form method="post">
     <label for="time_selection">Choose a period of time to view web traffic</label>
 
-    <select name="months" id="cars">
+    <select name="time_selection" id="time_selection">
       <option value="14day">Last 2 weeks</option>
       <option value="monthly">Last month</option>
       <option value="yearly">Last 365 days</option>
