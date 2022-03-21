@@ -179,11 +179,15 @@ if(isset($_POST['submitEmail'])){
   $mailObj = createMailObject($email, $password);
   if (isset($_FILES['myFile'])) {
     $i= 0;
-    foreach ($_FILES['myFile']["name"] as $value) {
-      uploadFile($i);
-      $mailObj->addAttachment("uploads/".$_FILES['myFile']["name"][$i]);
-      $i++;
+    if (!empty($_FILES['myFile']["name"][0])){
+        foreach ($_FILES['myFile']["name"] as $value) {
+        echo($i);
+        uploadFile($i);
+        $mailObj->addAttachment("uploads/".$_FILES['myFile']["name"][$i]);
+        $i++;
     }
+    }
+
   }
 
   // foreach($_POST as $var => $email){
