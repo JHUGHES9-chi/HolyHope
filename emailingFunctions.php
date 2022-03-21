@@ -32,10 +32,10 @@ function getEvents($db){
 }
 
 function getEventCustomersEmails($eventName, $db){
-    $query = "select customers.email as email
+    $query = "select Customers.email as email
     from event_orders 
-    inner join customers 
-    on event_orders.customer_email = customers.email
+    inner join Customers 
+    on event_orders.customer_email = Customers.email
     where event_orders.event_id = '".$eventName."'";
     // echo("--------------".$query."------------");
     $stmt = $db->query($query);
