@@ -14,6 +14,7 @@
 
 <nav class="navtop">
       <div>
+        <img src="images/holyhope_logo.jpg">
         <h1><a href="home.php">HolyHope</a> </h1>
         <a href="readevent.php"><i class="fas fa-atom"></i>Events</a>
         <a href="readproducts.php"><i class="fa fa-product-hunt"></i>Products</a>
