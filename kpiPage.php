@@ -8,7 +8,7 @@ if(!isset($_SESSION['username']))
 <?php include 'header.php';?>
 <div id="home-container">
   <div class="top left">
-  <button class="home-button button3" onclick="document.location='viewSales.php'">Monthly sales report</button>
+  <button class="home-button button3" onclick="document.location='viewSales.php'">View recent sales</button>
   </div>
   <div class="top right">
   <button class="home-button button3" onclick="document.location='websiteTraffic.php'">Holyhope.co.uk website Traffic</button>
