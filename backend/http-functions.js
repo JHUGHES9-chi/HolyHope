@@ -51,13 +51,13 @@ export async function getFileUrl() {
 }
 
 /**
- deleteProduct function
- 
- This is a USE request
- 
- This function expects to be called with 1 parameter(productID) for example:
- https://mysite.com/_functions/deleteProduct/productID
- 
+* deleteProduct function
+*
+* This is a USE request
+* 
+* This function expects to be called with 1 parameter(productID) for example:
+* https://mysite.com/_functions/deleteProduct/productID
+* 
 */
 export async function use_deleteProduct(request){
   let options = {
@@ -95,8 +95,7 @@ function add_media(productId, src){
 }
 
 /**
- Authentication function to verify a secretphrase password
- 
+* Authentication function to verify a secretphrase password
 */
 function verify_connection(psswd){
   let authenticated = false;
@@ -113,7 +112,7 @@ function verify_connection(psswd){
 }
 
 /**
- Externally visible function 'query_quantity' that returns the quantity of products available or the remaining spaces left for an event.
+* Externally visible function 'query_quantity' that returns the quantity of products available or the remaining spaces left for an event.
 */
 export async function query_quantity(productId){
   var inventory = 0
@@ -133,7 +132,7 @@ export async function query_quantity(productId){
 
 
 /**
- Multi threading function to decrement the stock level of a product/event
+* Multi threading function to decrement the stock level of a product/event
 */
 async function decrementHandler(productId, value) {
   value = value * -1
@@ -156,7 +155,7 @@ async function decrementHandler(productId, value) {
 
 
 /**
- Multi threading function to increment the stock level of a product/event
+* Multi threading function to increment the stock level of a product/event
 */
 async function incrementHandler(productId, value) {
 
@@ -377,7 +376,7 @@ export async function get_events(request) {
   }
 
 
-
+/** test function not externally visible */
  export function get_items(){
    wixData.query("Stores/Products")
    .eq("productType", "digital")
@@ -387,7 +386,7 @@ export async function get_events(request) {
   } ) ;
   return ok;
  }
-  
+ /** test function not externally visible, this will insert hard coded value to test database*/
 export function get_insert(){
   let toInsert = {
     "_id": "0000001",
