@@ -32,6 +32,11 @@
 
 // The following is an example of an HTTP function, which gets the product of 2 operands. Adapt the code below for your specific use case.
 
+
+
+
+/** Draft of http-functions.js on wix side */
+
 import {created, ok, badRequest, notFound, serverError} from 'wix-http-functions';
 import wixData from 'wix-data';
 
@@ -45,7 +50,15 @@ export async function getFileUrl() {
   return mediaManager.getFileUrl("wix:image://v1/97d5d5_166063b3f8294232a61099ff7448ee0c~mv2.jpg/file.jpg#originWidth=2525&originHeight=3000");
 }
 
-
+/**
+ deleteProduct function
+ 
+ This is a USE request
+ 
+ This function expects to be called with 1 parameter(productID) for example:
+ https://mysite.com/_functions/deleteProduct/productID
+ 
+*/
 export async function use_deleteProduct(request){
   let options = {
     "headers": {
@@ -81,6 +94,10 @@ function add_media(productId, src){
   return addProductMedia(productId, mediaData)
 }
 
+/**
+ Authentication function to verify a secretphrase password
+ 
+*/
 function verify_connection(psswd){
   let authenticated = false;
 
@@ -95,13 +112,16 @@ function verify_connection(psswd){
   
 }
 
+/**
+ Externally visible function 'query_quantity' that returns the quantity of products available or the remaining spaces left for an event.
+*/
 export async function query_quantity(productId){
   var inventory = 0
   let quantityQuery = await wixData.query("Stores/Products")
     .eq('_id', productId)
     .find()
     .then ( (results) =>{
-       console.log(results)
+       inventory = results.inventory
     })
     .catch ( (err) => {
         let errorMsg = err
@@ -111,6 +131,10 @@ export async function query_quantity(productId){
   
 }
 
+
+/**
+ Multi threading function to decrement the stock level of a product/event
+*/
 async function decrementHandler(productId, value) {
   value = value * -1
   let variants = await getProductVariants(productId);
@@ -130,6 +154,10 @@ async function decrementHandler(productId, value) {
     })
 }
 
+
+/**
+ Multi threading function to increment the stock level of a product/event
+*/
 async function incrementHandler(productId, value) {
 
   let variants = await getProductVariants(productId);
@@ -153,7 +181,7 @@ async function incrementHandler(productId, value) {
 export async function use_updateEvent(request){
 
   await console.log(request)
-  var ip = "78.151.81.119/HolyHope/images/"
+  var ip = "78.151.81.119/HolyHope/images/" /** THIS IP IS NOW OUTDATED NEEDS UPDATING */
 
   
   let options = {
