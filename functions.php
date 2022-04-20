@@ -1,9 +1,9 @@
 <?php
 
 /**
-    Connection function for our localhost database. This function is self contained and has all the required credentials to authenticate a session with the MySQL database.
-    If succesful the PDO object is returned for the function to use to query the database with.
-    If unsuccesful the script will stop and the page will display a non descriptive error message for security reasons.
+*    Connection function for our localhost database. This function is self contained and has all the required credentials to authenticate a session with the MySQL database.
+*    If succesful the PDO object is returned for the function to use to query the database with.
+*    If unsuccesful the script will stop and the page will display a non descriptive error message for security reasons.
 */
 function pdo_connect_mysql() {
     // MYSQL login details
@@ -20,8 +20,8 @@ function pdo_connect_mysql() {
 }
 
 /**
-Given a username as a parameter the function will return the account password hint. 
-There is no error checking if the username has no related account and will return a empty object if this event occurs.
+*   Given a username as a parameter the function will return the account password hint. 
+*   There is no error checking if the username has no related account and will return a empty object if this event occurs.
 */
 function get_password_hint($username){
     $db = pdo_connect_mysql();
@@ -58,9 +58,10 @@ function file_uploader($fileNumber){
     }
 }
 
-/** Gets a temporary event ID from local DB to be used to create a real event and unhide it on Wix.
-Takes no paramters
-Returns empty if no temporary ID's are left on the local DB
+/** 
+*   Gets a temporary event ID from local DB to be used to create a real event and unhide it on Wix.
+*   Takes no paramters
+*   Returns empty if no temporary ID's are left on the local DB
 */
 function get_temp_event_id(){
     $db = pdo_connect_mysql();
@@ -72,8 +73,8 @@ function get_temp_event_id(){
 
 
 /**
-Calls the wix http end point using curl_ping() to delete a product. 
-  This function required a productId paramter
+*   Calls the wix http end point using curl_ping() to delete a product. 
+*   This function required a productId paramter
 */
 function delete_product($productId){
         $function = "deleteProduct";
@@ -81,8 +82,8 @@ function delete_product($productId){
 }
 
 /**
-Using string manipulation and the saved wix image reference value (locally stored variable on our MySQL database pointing to the local location of image on wix server)
-The URL for the image is created and returned as a string.
+8   Using string manipulation and the saved wix image reference value (locally stored variable on our MySQL database pointing to the local location of image on wix server)
+*   The URL for the image is created and returned as a string.
 */
 function get_image_url($event){
     
@@ -102,11 +103,9 @@ function get_image_url($event){
 }
 
 /**
-
-This function returns the total revenue from events for the last month.
-A dynamic SQL query will be run to calculate the 1 month prior date range and returns all the event transactions in that time date.
-The function will calculate the sum of all event transactions and return the total
-
+*   This function returns the total revenue from events for the last month.
+*   A dynamic SQL query will be run to calculate the 1 month prior date range and returns all the event transactions in that time date.
+*   The function will calculate the sum of all event transactions and return the total
 */
 function calculate_month_event_sales(){
     $total = 0;
@@ -125,11 +124,9 @@ function calculate_month_event_sales(){
 
 
 /**
-
-This function returns the total revenue from product for the last month.
-A dynamic SQL query will be run to calculate the 1 month prior date range and returns all the product transactions in that time date.
-The function will calculate the sum of all product transactions and return the total
-
+*   This function returns the total revenue from product for the last month.
+*   A dynamic SQL query will be run to calculate the 1 month prior date range and returns all the product transactions in that time date.
+*   The function will calculate the sum of all product transactions and return the total
 */
 function calculate_month_product_sales(){
     $total = 0;
@@ -148,9 +145,7 @@ function calculate_month_product_sales(){
 
 
 /**
-
-Function to handle single argument API calls to wix, this function includes authentication for the API's
-
+*   Function to handle single argument API calls to wix, this function includes authentication for the API's
 */
 function curl_ping($function, $arg1){
     $url_base = "https://holyhope.co.uk/_functions-dev/"; /** base http endpoint for wix API */
@@ -162,8 +157,8 @@ function curl_ping($function, $arg1){
 }
 
 /**
-    parse_string takes 1 parameter of a string type.
-    It removes all spaces and replaces them with '_' so they dont break the URL. API's on the wix side have the opposite function to replace the newly added '_' with ' '
+*   parse_string takes 1 parameter of a string type.
+*   It removes all spaces and replaces them with '_' so they dont break the URL. API's on the wix side have the opposite function to replace the newly added '_' with ' '
 */
 function parse_string($string){
     return str_replace(" ", "_", $string);
@@ -171,16 +166,15 @@ function parse_string($string){
 
 
 /**
-    Funciton to ping HTTP endpoint on wix. this function handles updateevent & addevent functionality. Authentication is handled by this function without additional parameters.
-    
-    Parameters needed:
-        $productId = ID of event to update or add
-        $name = new name of product
-        $max_attendee = maximum amount of attenddee's allowed
-        $description = new description of event
-        $price = price per ticket
-        $image_url = URL of image, this image must be hosted. Any image stored in the HolyHope directory on the pi is accessible from: (device public ip)/HolyHope/Images/
-        
+*   Funciton to ping HTTP endpoint on wix. this function handles updateevent & addevent functionality. Authentication is handled by this function without additional parameters.
+*
+*    Parameters needed:
+*        $productId = ID of event to update or add
+*        $name = new name of product
+*        $max_attendee = maximum amount of attenddee's allowed
+*        $description = new description of event
+*        $price = price per ticket
+*        $image_url = URL of image, this image must be hosted. Any image stored in the HolyHope directory on the pi is accessible from: (device public ip)/HolyHope/Images/       
 */
 function curl_event_ping($function, $productId, $name, $max_attendee, $description, $price, $image_url){
     $name = parse_string($name);
@@ -197,7 +191,7 @@ function curl_event_ping($function, $productId, $name, $max_attendee, $descripti
 }
 
 /**
-Add event handle function
+*   Add event handle function
 */
 
 function add_event($name, $description, $max_attendee, $price, $image_url = ""){
@@ -213,9 +207,7 @@ function add_event($name, $description, $max_attendee, $price, $image_url = ""){
 }
 
 /**
-
-Update event handle function
-
+*   Update event handle function
 */
 function updateEvent($productId, $name, $description, $max_attendee, $price, $image_url = ""){
     $function = "updateEvent";
@@ -240,9 +232,9 @@ function clean($userInput) {
 }
 
 /**
-Returns the total amount of rows for a specified table.
-
-Returns integer
+*   Returns the total amount of rows for a specified table.
+*
+*   Returns integer
 */
 function getRowAmount($tableName){
     $db = pdo_connect_mysql();
@@ -252,9 +244,8 @@ function getRowAmount($tableName){
 }
 
 /**
- returns the amount of attendees at a given event id
- NOTE - $tablename should always be the name of the linking table between events and custumers.
-
+*   returns the amount of attendees at a given event id
+*   NOTE - $tablename should always be the name of the linking table between events and custumers.
 */
 function getAttendeesAmount($tableName, $eventId){
     $db = pdo_connect_mysql();
@@ -264,9 +255,8 @@ function getAttendeesAmount($tableName, $eventId){
 }
 
 /**
- Hashes string value provided and returns the SHA256 Encrypted text
- 
- This is for login authentication as passwords are not stored in plain text.
+*    Hashes string value provided and returns the SHA256 Encrypted text
+*   This is for login authentication as passwords are not stored in plain text.
 */
 function getHashValue($toHash){
     return hash('sha256', $toHash);
