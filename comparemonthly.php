@@ -1,4 +1,7 @@
 <?php ;
+/**
+  If the user has not logged in and set the 'username' session variable then they will be redirected to index.php where they can login to prove thier identity.
+*/
 session_start();
 if(!isset($_SESSION['username']))
 {
