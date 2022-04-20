@@ -1,12 +1,13 @@
-    
+/** Default landing page for HolyHope */
 <?php
-  session_start();
-  if(isset($_POST['submit'])){
+  include "functions.php";
+  session_start(); /** Start a session so that $_SESSION[] can be accessed to prove if the user has logged in. */
+  if(isset($_POST['submit'])){ /** If the user has previously submit thier login details and they now need authenticating run assign the following variables */
     $username=$_POST['username'];
     $password=$_POST['password'];
-    include "functions.php";
-  if (loginAutentication($username, $password)){
-  $_SESSION['username'] = $username;
+
+  if (loginAutentication($username, $password)){ /** Check login details against database hashed values */
+  $_SESSION['username'] = $username; /** Assign a SESSION variable 'username' that can be used to prove the user has previously logged in */
   header('location:home.php');
   }
   else{
