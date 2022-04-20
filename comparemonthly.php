@@ -32,7 +32,12 @@ if(!isset($_SESSION['username']))
 
 <?php
 $selectOption = $_POST['months'];
-
+/**
+  When the page opens there is no KPI visible by default, this is not ideal and would be a future improve the team would like to make
+  
+  When the user selects a time frame the page reloads and sets the 'months' variable in $_POST which will result in the correct KPI being displayed
+  
+*/
 if(isset($_POST['months'])){
 
 echo "
