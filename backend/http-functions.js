@@ -32,11 +32,6 @@
 
 // The following is an example of an HTTP function, which gets the product of 2 operands. Adapt the code below for your specific use case.
 
-
-
-
-/** Draft of http-functions.js on wix side */
-
 import {created, ok, badRequest, notFound, serverError} from 'wix-http-functions';
 import wixData from 'wix-data';
 
@@ -50,6 +45,7 @@ export async function getFileUrl() {
   return mediaManager.getFileUrl("wix:image://v1/97d5d5_166063b3f8294232a61099ff7448ee0c~mv2.jpg/file.jpg#originWidth=2525&originHeight=3000");
 }
 
+
 /**
 * deleteProduct function
 *
@@ -59,6 +55,7 @@ export async function getFileUrl() {
 * https://mysite.com/_functions/deleteProduct/productID
 * 
 */
+
 export async function use_deleteProduct(request){
   let options = {
     "headers": {
@@ -76,10 +73,14 @@ export async function use_deleteProduct(request){
       // product has been deleted
     })
     .catch( (err) => {
-      // there was an error deleting the product
+      console.log(err)
     });
 }
 
+
+/**
+ * Deletes media from product or event
+ */
 function del_media(productId){
   return removeProductMedia(productId)
 }
@@ -100,7 +101,7 @@ function add_media(productId, src){
 function verify_connection(psswd){
   let authenticated = false;
 
-  var password = "secretphrase"
+  var password = "secretphrase" /**Secret passphrase variable */
 
   if(password == psswd){
     authenticated = true
@@ -110,7 +111,6 @@ function verify_connection(psswd){
 
   
 }
-
 /**
 * Externally visible function 'query_quantity' that returns the quantity of products available or the remaining spaces left for an event.
 */
@@ -120,7 +120,7 @@ export async function query_quantity(productId){
     .eq('_id', productId)
     .find()
     .then ( (results) =>{
-       inventory = results.inventory
+       console.log(results)
     })
     .catch ( (err) => {
         let errorMsg = err
@@ -130,10 +130,10 @@ export async function query_quantity(productId){
   
 }
 
-
 /**
 * Multi threading function to decrement the stock level of a product/event
 */
+
 async function decrementHandler(productId, value) {
   value = value * -1
   let variants = await getProductVariants(productId);
@@ -157,6 +157,7 @@ async function decrementHandler(productId, value) {
 /**
 * Multi threading function to increment the stock level of a product/event
 */
+
 async function incrementHandler(productId, value) {
 
   let variants = await getProductVariants(productId);
@@ -180,7 +181,7 @@ async function incrementHandler(productId, value) {
 export async function use_updateEvent(request){
 
   await console.log(request)
-  var ip = "78.151.81.119/HolyHope/images/" /** THIS IP IS NOW OUTDATED NEEDS UPDATING */
+  var ip = "78.151.81.119/HolyHope/images/"
 
   
   let options = {
@@ -210,17 +211,7 @@ export async function use_updateEvent(request){
       console.log(image_src)
       add_media(productId, image_src)
   }
-  //var image_src = "https://2.bp.blogspot.com/-6dQSJtWYAaY/VXGq2ZTJqOI/AAAAAAAAC4A/OS9E_j4KEro/s280/google%2BInterview%2BQuestions.jpg"
 
-
-  //var productId = request.query['product_id']
-  //var name = request.query['name']
-  //var max_attendees = request.query['max']
-  //var event_desc = request.query['desc']
-  //var date = request.query['date']
-  //Date isn't a field that is stored. We ne
-  //var price = request.query['price']
-  //var image_src = request.query['image']
 
   wixStoresBackend.updateProductFields(productId, {
     "name": name,
@@ -255,15 +246,38 @@ export async function use_updateEvent(request){
   return ok(options)
 }
 
-
+/**
+ * parse_string
+ *  Replaces '_' with ' ' as all information is sent over URL and ' ' would break the URL
+ */
 
 function parse_string(string){
-
   let new_str = string.replace(/_/ig, " ")
+  console.log(new_str)
   return(new_str);
 }
 
 
+/**
+ * Test function
+ */
+export function test(){
+  let str = "different_name_to_test"
+  console.log(parse_string(str))
+}
+
+/**
+ * Exposed http API to add event to wix customer site
+ * 
+ * Requires parameters in this order:
+ * 
+ * 1 - Secret passphrase
+ * 2 - Product/EventID
+ * 3 - Maximum atendee's
+ * 4 - event description
+ * 5 - price
+ * 6 - new event media (optional)
+ */
 export async function use_add_event(request){
   console.log(request)
   //await console.log(request.query)
@@ -284,24 +298,16 @@ export async function use_add_event(request){
   }
 
   var productId = request.path[1]
-  var name = parse_string(request.path[2])
+  var name = await parse_string(request.path[2])
+  //console.log(name)
   var max_attendees = request.path[3]
-  var event_desc = parse_string(request.path[4])
+  var event_desc = await parse_string(request.path[4])
   console.log(productId)
   //Date isn't a field that is stored. We ne
   var price = request.path[5]
   var image_src = ip + request.path[6]
   del_media(productId)
 
-
-  //var productId = request.query['product_id']
-  //var name = request.query['name']
-  //var max_attendees = request.query['max']
-  //var event_desc = request.query['desc']
-  //var date = request.query['date']
-  //Date isn't a field that is stored. We ne
-  //var price = request.query['price']
-  //var image_src = request.query['image']
 
   wixStoresBackend.updateProductFields(productId, {
     "name": name,
@@ -337,7 +343,9 @@ export async function use_add_event(request){
 
   return ok()
 }
-
+/**
+ * Exposed function to get all events, this is used to keep the two databases synced and was used to create the original dataset
+ */
 export async function get_events(request) {
   let options = {
     "headers": {
@@ -376,7 +384,7 @@ export async function get_events(request) {
   }
 
 
-/** test function not externally visible */
+
  export function get_items(){
    wixData.query("Stores/Products")
    .eq("productType", "digital")
@@ -386,7 +394,7 @@ export async function get_events(request) {
   } ) ;
   return ok;
  }
- /** test function not externally visible, this will insert hard coded value to test database*/
+  
 export function get_insert(){
   let toInsert = {
     "_id": "0000001",
