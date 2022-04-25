@@ -82,7 +82,7 @@ function delete_product($productId){
 }
 
 /**
-8   Using string manipulation and the saved wix image reference value (locally stored variable on our MySQL database pointing to the local location of image on wix server)
+*   Using string manipulation and the saved wix image reference value (locally stored variable on our MySQL database pointing to the local location of image on wix server)
 *   The URL for the image is created and returned as a string.
 */
 function get_image_url($event){
