@@ -5,10 +5,14 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
+
+// returns a html container with the email and a select/deselect box
 function makeCheckbox($email, $identifier){
     echo '<div class="emailCheckbox"><input class="checkboxEmail" form="sendMailForm" type="checkbox" id="'.$identifier.'" value="'.$email.'"name="'.$identifier.'" checked> <label class=checkboxLabel" for="'.$identifier.'">'.$email.'</label></div>';
 
 }
+
+//creates the mailing object
 function createMailObject($email, $password){
     $mail = new PHPMailer();
     $mail->isSMTP();
@@ -22,8 +26,7 @@ function createMailObject($email, $password){
     $mail->Body = "a test 123123123";
     return $mail;
 }
-
-// TODO once on actual server query need to be changed (id to event_id, name to event_name)
+//returns all events from the database
 function getEvents($db){
     $query = "select id, name from events";
     $stmt = $db->query($query);
@@ -31,13 +34,14 @@ function getEvents($db){
     return $events;
 }
 
+//returns all emails that are enlisted on a certain event
+// uses a inner join to get all emails of a certain event
 function getEventCustomersEmails($eventName, $db){
     $query = "select Customers.email as email
     from event_orders 
     inner join Customers 
     on event_orders.customer_email = Customers.email
     where event_orders.event_id = '".$eventName."'";
-    // echo("--------------".$query."------------");
     $stmt = $db->query($query);
     $emails = $stmt->fetchall(PDO::FETCH_ASSOC);
     return $emails;
@@ -54,6 +58,9 @@ function makeEventButton($email, $identifier){
 //     $id = $stmt->fetch(PDO::FETCH_ASSOC);
 //     return $id["id"];
 // }
+
+//when a file is added to the email sender the file gets saved to /uploads before sending
+// there are optional constraints to be added to the file that can be sent if required
 function uploadFile($fileNumber){
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["myFile"]["name"][$fileNumber]);

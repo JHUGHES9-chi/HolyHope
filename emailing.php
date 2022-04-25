@@ -1,5 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+
+// jQeuery used to give client side usability with select/ deselect buttons
 $(document).ready(function(){
   $("#selectAllButton").click(function(){
     $(".checkboxEmail").each(function(){this.checked = true;});
@@ -25,11 +27,14 @@ if(!isset($_SESSION['username']))
 <?php include 'functions.php';?>
 <?php include 'header.php';?>
 <?php include 'emailingFunctions.php';?>
+<!-- most functions used in this script are from the emailingFunctions.php file -->
 <h1>Emailing system</h1>
 
 <?php
+// connects to database
 $db = pdo_connect_mysql()
 ?>
+<!-- styles for page below -->
 <style>
   textarea {
     resize:none;
@@ -60,7 +65,6 @@ $db = pdo_connect_mysql()
   grid-template-columns: auto;
   grid-template-rows: auto auto auto;
   align-content:start ;
-  /* align-content: center; */
   margin: 1px;
   padding: 1px;
   border: 1px solid red;
@@ -93,14 +97,10 @@ $db = pdo_connect_mysql()
   display: grid;
   grid-template-columns:auto;
   align-content:start ;
-  
-  /* grid-template-rows: repeat(auto-fill, 3)); */
 }
 .emailingBody{
   display: flex;
   align-items: stretch;
-  /* grid-template-columns: auto auto auto; */
-  /* grid-template-rows: auto auto auto */
 }
 .emailList{
   overflow-x: hidden;
@@ -127,7 +127,9 @@ $db = pdo_connect_mysql()
   margin: 1px;
 }
 </style>
+<!-- sets up the looks of the page -->
 <div class="emailingBody">
+  <!-- this form is where you right the email message and add attached files -->
   <form class="sendMailForm" name="sendemail" method="post" id="sendMailForm" enctype="multipart/form-data">
     <input type="text" placeholder="Subject" name="username">
     <textarea id="body" name="body" placeholder="Body" rows=15 cols="60"></textarea>
@@ -136,10 +138,12 @@ $db = pdo_connect_mysql()
   </form> 
     <div class="emailListBody">
       <h1>Emails</h1>
+      <!-- these buttons is what the javascript is applied to -->
       <button class="selectAllButtonEmail" id="selectAllButton" value="selectAll">select all</button>
       <button class="selectAllButtonEmail" id="deselectAllButton" value="deselectAll">deselect all</button>
       <div class="emailList">
       <?php
+      // gets all emails based on event selected
       if(isset($_POST["eventButton"])){
         $emails = getEventCustomersEmails($_POST["eventButton"], $db);
         $i = 0;
@@ -151,6 +155,7 @@ $db = pdo_connect_mysql()
       ?>
       </div>
     </div>
+<!-- this container is where all the events are displayed -->
     <div class = "emailListBody">
       <h1>Events</h1>
       <div class="emailList">
@@ -158,7 +163,6 @@ $db = pdo_connect_mysql()
         <?php
         $events = getEvents($db);
         $i = 0;
-        //TODO change key when on main server
         foreach($events as $email){
           makeEventButton($email["name"], $i);
           $i ++;
@@ -173,9 +177,12 @@ $db = pdo_connect_mysql()
 
 
 <?php
+
 if(isset($_POST['submitEmail'])){  
   $password = "HolyhopeTestEmailPassword123";
   $email  = "holyhopetestemail@gmail.com";
+  // creates a mailing object with the username and password of the account the mails
+  // will be sent from.
   $mailObj = createMailObject($email, $password);
   if (isset($_FILES['myFile'])) {
     $i= 0;
@@ -188,14 +195,15 @@ if(isset($_POST['submitEmail'])){
     }
 
   }
-
-  // foreach($_POST as $var => $email){
-  //   if (is_int($var)){
-  //       $mailObj->AddAddress($email);
-  //   }
-  // }
+  // adds all emails in the list to the emailing object
+  foreach($_POST as $var => $email){
+    if (is_int($var)){
+        $mailObj->AddAddress($email);
+    }
+  }
   $mailObj->AddAddress($email);
   $mailObj->Body = $_POST["body"];
+  //send emails and returns a confirmation to see if the emails were succesfully sent or not
   if(!$mailObj->Send()) {
     
     echo "<p>There was an error sending the email</p>";
